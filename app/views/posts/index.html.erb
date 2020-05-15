@@ -1,0 +1,54 @@
+
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <h1>Index of Posts</h1>
+</div>
+<div class="row"> 
+  <h5>1) Rendering with a table and iteration with <code>&lt% @posts.each do |post| %></code></h5>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Body</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= post.body %></td>
+          <td><%= link_to 'Show & add comment', post_path(post) %></td>
+          <td><%= link_to 'Show Comments', post_comments_path(post) %></td>
+          <td><%= link_to 'Edit', edit_post_path(post) %></td>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+  <%= link_to 'New Post', new_post_path %>
+</div>
+
+
+<br>
+
+
+<div class="row">
+  <h5>2) Other possibility: rendering with <code>&lt%= render @posts %></code> with the partial:</h5>
+<pre>
+#views/posts/_post.html.erb
+&ltarticle >
+    &lth6 > Title: &lt%= post.title %> &lt/h6>
+    lth6 > Body: &lt%= post.body %> &lt/h6>
+    &lt%= link_to 'Show Comments', post_comments_path(post) %>
+    &lt%= link_to 'Edit', edit_post_path(post) %>
+    &lt%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+&lt/article>
+</pre>
+<hr>
+</div>
+<%= render @posts %>
+

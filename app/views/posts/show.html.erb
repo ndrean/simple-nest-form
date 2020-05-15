@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+<p>#views/posts/:post_id</p>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Post # <%= @post.id %></div>
+        <div class="card-body">
+        <p><strong>Title:</strong> <%= @post.title %></p>
+        <p><strong>Body:</strong> <%= @post.body %></p>
+        <p><%= link_to 'Edit post', edit_post_path(@post), class:"badge badge-info", style:"color:white; font-size:16px;" %></p>
+        </div>
+        <div class="card-body">
+        <pre>
+          #posts_controler.rb
+          def show
+            @post = Post.find(params[:id])
+            @comment = Comment.new(post: @post)
+          end
+
+          #views/psots/:post_id
+          &lt%= form_with(model: [@post, @comment], local: true) do |form| %>
+            &lt%= render 'comments/form', form: form %>
+          &lt% end %>
+          </pre>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">Create a new comment</div>
+        <div class="card-body">
+
+          <%#= form_with(model: [@post, @comment],remote: true, url:'posts/#{@post.id}/comments/save' do |form| %>
+            
+            <%= render 'comments/forms' %>
+          
+    
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+        <%= link_to 'Back to all Posts', posts_path, class:"badge badge-info", style:"color:white; font-size:14px;" %>
+    </div>
+  </div>
+  <hr>
+
+  <div id="article">
+    <%= render @post.comments %>
+  </div>
+  
+
+  
+</div>
+
+

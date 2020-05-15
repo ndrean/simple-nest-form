@@ -1,0 +1,9 @@
+<div class="row" data-id=<%= comment.id %>>
+    <article >
+        <h6 >Body: <%= comment.body %></h6>
+        <%#= link_to 'Show Comments', post_comments_path(post) %>
+        <%#= link_to 'Edit', edit_post_path(post) %>
+        <%= link_to 'Destroy', [@post, comment], method: :delete, remote: true, data: { confirm: 'Are you sure?' } %>
+        <hr>
+    </article>
+</div>

@@ -1,0 +1,9 @@
+
+<article >
+        <h6 >Title: <%= post.title %></h6>
+        <h6 >Body: <%= post.body %></h6>
+        <%= link_to 'Show Comments', post_comments_path(post) %>
+        <%= link_to 'Edit', edit_post_path(post) %>
+        <%= link_to 'Destroy', [post, @comment], method: :delete, data: { confirm: 'Are you sure?' } %>
+        <hr>
+    </article>

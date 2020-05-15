@@ -1,0 +1,17 @@
+<%#= form_with(model: comment, local: true) do |form| %>
+<%= form_with(model: [@post, @comment], remote: true) do |form| %>
+
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </div>
+
+  <div class="field">
+    <%= form.label :post_id %>
+    <%= form.text_field :post_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

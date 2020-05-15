@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SimpleNestForm</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+  
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+  </head>
+
+  <body>
+  <div class="container">
+    <%= yield %>
+   </div>
+
+    <% if Rails.env.development? %>
+      <div class="container">
+      <hr><hr>
+          <div class="card">
+              <div class="card-header">
+                  Params
+              </div>
+              <div class="card-body">
+                      <code>
+                          <%= debug(params) %>
+                      </code>
+              </div>
+          </div>
+        </div>
+      <% end %>
+      
+    
+
+    
+
+  </body>
+</html>

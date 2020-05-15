@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+<p>#views/comments/index.html.erb</p>
+<h1>Comments for Post # <%= @post.id %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Body</th>
+      <th>Post</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.body %></td>
+        <td><%= comment.post_id %></td>
+        <td><%#= link_to 'Show Post', @post %></td>
+        <td><%= link_to 'Edit', edit_post_comment_path(@post, comment) %></td>
+        <td><%= link_to 'Destroy', [@post, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Back to all Posts', posts_path %> |
+
+<%= link_to 'New Comment', new_post_comment_path %> 
+<pre>
+# comments#new
+def new
+  @post = Post.find(params[:post_id]) # <=> before_action :set_post
+  @comment = @post.comments.build
+end
+</pre>
+
+<pre>
+#view/comments/new.html.erb => /posts/:post_id/comments/new
+&lt%= form_with(model: [@post, @comment], local: true) do |form| %>
+  &lt%= render 'comments/form', form: form %>
+&lt% end %>
+</pre>
