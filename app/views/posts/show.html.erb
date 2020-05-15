@@ -45,6 +45,13 @@
           
     
         </div>
+        <pre>
+        &ltform action="/posts/1/comments" accept-charset="UTF-8" data-remote="true" method="post">
+        &lttextarea name="comment[body]" id="comment_body">&lt/textarea>
+        &ltinput type="text" value="1" name="comment[post_id]"> 
+        &ltinput type="submit" name="commit" value="Create Comment" data-disable-with="Create Comment">
+        &lt/form>
+        </pre>
       </div>
     </div>
   </div>
@@ -60,6 +67,11 @@
   <hr>
   <div id="article">
     <%= render @post.comments %>
+  </div>
+  <div data-controller="comments">
+    <button data-action="comments#showAll"> Show Older Comments</button>
+    <div data-target="comments.show" style="visibility:hidden"></div>
+    <%= render 'posts/all' %>
   </div>
   
 

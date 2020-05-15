@@ -1,17 +1,21 @@
 <%#= form_with(model: comment, local: true) do |form| %>
-<%= form_with(model: [@post, @comment], remote: true) do |form| %>
+<div data-controller="comments">
 
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-  </div>
+  <%= form_with model: [@post, @comment], data: { action: "comments#addBody"} do |form| %>
 
-  <div class="field">
-    <%= form.label :post_id %>
-    <%= form.text_field :post_id %>
-  </div>
+    <div class="field">
+      <%= form.label :body %>
+      <%= form.text_area :body, data: { target: "comments.body" } %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= form.label :post_id %>
+      <%= form.text_field :post_id %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+  <ul data-target="comments.add"></ul>
+</div>

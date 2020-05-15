@@ -21,17 +21,23 @@
           <td><%= post.title %></td>
           <td><%= post.body %></td>
           <td><%= link_to 'Show & add comment', post_path(post) %></td>
-          <td><%= link_to 'Show Comments', post_comments_path(post) %></td>
-          <td><%= link_to 'Edit', edit_post_path(post) %></td>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%#= link_to 'Show Comments', post_comments_path(post) %></td>
+          <td><%#= link_to 'Edit', edit_post_path(post) %></td>
+          <td><%#= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= button_to 'Show', post_path(:id =>   post.id), method: :get %> </td>
+          <td><%= button_to 'Edit', edit_post_path(:id =>  post.id), method: :get %></td>
+          <td><%= button_to 'Destroy', post_path(:id => post.id), method: :delete %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <br>
-  <%= link_to 'New Post', new_post_path %>
 </div>
-
+<div class="row">
+   <%= link_to 'New Post', new_post_path, class:"badge badge-info", style:"color:white;font-size:16px;" %>
+</div>
+<div class="row">
+<p>https://morioh.com/p/5999950bcfb1</p>
+</div>
 
 <br>
 
@@ -41,8 +47,8 @@
 <pre>
 #views/posts/_post.html.erb
 &ltarticle >
-    &lth6 > Title: &lt%= post.title %> &lt/h6>
-    lth6 > Body: &lt%= post.body %> &lt/h6>
+    &lth6> Title: &lt%= post.title %> &lt/h6>
+    &lth6> Body: &lt%= post.body %> &lt/h6>
     &lt%= link_to 'Show Comments', post_comments_path(post) %>
     &lt%= link_to 'Edit', edit_post_path(post) %>
     &lt%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
