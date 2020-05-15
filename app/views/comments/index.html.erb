@@ -29,17 +29,4 @@
 <%= link_to 'Back to all Posts', posts_path %> |
 
 <%= link_to 'New Comment', new_post_comment_path %> 
-<pre>
-# comments#new
-def new
-  @post = Post.find(params[:post_id]) # <=> before_action :set_post
-  @comment = @post.comments.build
-end
-</pre>
 
-<pre>
-#view/comments/new.html.erb => /posts/:post_id/comments/new
-&lt%= form_with(model: [@post, @comment], local: true) do |form| %>
-  &lt%= render 'comments/form', form: form %>
-&lt% end %>
-</pre>

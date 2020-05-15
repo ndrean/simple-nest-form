@@ -7,5 +7,19 @@
     <%= render 'comments/form', form: form %>
   
 <% end %>
+<pre>
+# comments#new
+def new
+  @post = Post.find(params[:post_id]) # <=> before_action :set_post
+  @comment = @post.comments.build
+end
+</pre>
+<pre>
+#views/comments/new.html.erb
+&lt%= form_with(model: [@post, @comment], local: true) do |form| %>
 
-<%= link_to 'Back', post_comments_path %>
+    &lt%= render 'comments/form', form: form %>
+  
+&lt% end %>
+</pre>
+<%= link_to 'Back to Comments of the post', post_comments_path, class:"badge badge-info", style:"color:white;font-size:14px;" %>

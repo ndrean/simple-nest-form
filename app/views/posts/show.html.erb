@@ -2,7 +2,7 @@
 <div class="container">
 <p>#views/posts/:post_id</p>
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="card">
         <div class="card-header">Post # <%= @post.id %></div>
         <div class="card-body">
@@ -10,6 +10,13 @@
         <p><strong>Body:</strong> <%= @post.body %></p>
         <p><%= link_to 'Edit post', edit_post_path(@post), class:"badge badge-info", style:"color:white; font-size:16px;" %></p>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Code for nested form: creation of a <em>comment</em> inside a <em>post</em></div>
         <div class="card-body">
         <pre>
           #posts_controler.rb
@@ -26,6 +33,7 @@
         </div>
       </div>
     </div>
+  
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">Create a new comment</div>
@@ -48,7 +56,8 @@
     </div>
   </div>
   <hr>
-
+  <h4>Comments appear below with Ajax and can de delete by Ajax</h4>
+  <hr>
   <div id="article">
     <%= render @post.comments %>
   </div>
