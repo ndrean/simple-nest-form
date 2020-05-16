@@ -2,9 +2,11 @@
 
 Simple one-to-may association _post / comment_ where the comments resources are namespaced by posts: `posts/:post_id/comments/:id`.
 
-[Rendering a collection of comments](#rendering-a-collectino-of-comments)
-[Redner a nested form](#render-a-nested-form) with `@post, @comment`
-[Other examples of custom routes/methods](#other-examples-of-custom-routes/methods)
+- [Rendering a collection of comments](#rendering-a-collectino-of-comments)
+
+- [ Render a nested form](#render-a-nested-form) with `@post, @comment`
+
+- [Other examples of custom routes/methods](#other-examples-of-custom-routes/methods)
 
 ## Routes:
 
@@ -24,13 +26,22 @@ end
 
 Example in the view _/views/posts_ that renders the method _posts#index_. We can iterate with a table and use `<% @posts.each do |post| %> <%= post.title %> ...`. We can also use `<%= render @posts %>` to render the list of post defined in a partial _views/posts/\_post.html.erb_ (as an _article_).
 
-Aother example with `<%= render @post.comments %>` to render all comments for a given post, with the partial _/views/comments/\_comment.html.erb_.
+Another example with `<%= render @post.comments %>` to render all comments for a given post, with the partial _/views/comments/\_comment.html.erb_.
 
 ## Render a nested form
 
 Two examples.
 
-1. On the view 'show' for _/posts/1_, we have a form to create a nested _comment_ (=> comments#create). The form is rendered with the partial `<%= render 'comments/_form %>`. We use the formbuilder `form_with` and define `<%= form_with model: [@post, @comment] do |form| %>` (where the form object `f.object` is a _comment_). The _posts#show_ furnishes a new comment object:
+1. On the view 'show' for _/posts/1_, we have a form to create a nested _comment_ (=> comments#create). The form is rendered with the partial `<%= render 'comments/_form %>`. We use the formbuilder `form_with` and define:
+
+```ruby
+# /views/post/1 posts/show
+<% render comments/forms %
+# views/comments/_forms.html.erb
+ <%= form_with model: [@post, @comment] do |form| %
+```
+
+(where the form object `f.object` is a _comment_). The _posts#show_ furnishes a new comment object:
 
 ```ruby
 def show
@@ -39,7 +50,7 @@ def show
 end
 ```
 
-and on submit, the form calls by default the method _comments#create_ (the url would have been `post_comments_path(@post) <=> url: {controller: 'comments, action: "create"}`. It automatically calls the method _comments#create_ from the other controller:
+and on submit, the form calls by default the method _comments#create_ (the url would have been `post_comments_path(@post)`. It automatically calls the method _comments#create_ from the other controller:
 
 ```ruby
 #comments_controller.rb
@@ -78,6 +89,7 @@ def save
 so we have a view _/posts/1/comments/new_ that contains a form with `form_with ..., local: true` (non-Ajax):
 
 ```ruby
+# views/posts/:post_id/comments/new
 <%= form_with model: [@post, @comment], url: {controller:"comments", action: "save"}, local: true  do |form| %>
 
 ```
