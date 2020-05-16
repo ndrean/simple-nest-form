@@ -1,20 +1,6 @@
 <div >
-
-  <%= form_with model: [@post, @comment]  do |form| %>
-    <%= form.object %>
-    <div class="field">
-      <%= form.label :body %>
-      <%= form.text_area :body, data: { target: "comments.body" } %>
-    </div>
-
-    <div class="field">
-      <%= form.label :post_id %>
-      <%= form.text_field :post_id %>
-    </div>
-
-    <div class="actions">
-      <%= form.submit %>
-    </div>
+  <%= simple_form_for [@post, @comment], remote: true do |form| %>
+    <%= form.input :body %>
+    <%= form.button :submit, class:'btn btn-primary' %>
   <% end %>
-
 </div>

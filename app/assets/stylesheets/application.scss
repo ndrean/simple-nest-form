@@ -18,3 +18,18 @@
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+/* dark mode to refactor the links
+@media (prefers-color-scheme: dark) {
+    .container {
+        background-color: #666666;
+        color: white;
+    }
+}
+
+*/
+
+.mybadge {
+    color: white;
+    font-size: 18px;
+}

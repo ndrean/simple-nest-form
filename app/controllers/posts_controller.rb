@@ -1,6 +1,17 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
+  # GET /posts/favorite
+  def favorite
+    @posts = Post.where(liked: true)
+  end
+
+  # GET /posts/:post_id/commentator
+  def commentator
+    @post = Post.find(params[:id])
+    @commentator_name = @post.commentator_name
+  end
+
   # GET /posts
   def index
     @posts = Post.all
@@ -56,6 +67,7 @@ class PostsController < ApplicationController
     @post.comments.destroy_all #<=> dependent: :destroy in the model
     @post.destroy
     respond_to do |format|
+      format.js
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end

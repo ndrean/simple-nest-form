@@ -1,9 +1,0 @@
-<% for comment in @post.comments  %>
-    <ul>
-        <li class="comment">
-            <%= comment.body %>
-                <%= button_tag "Remove Comment", data: { controller: "comments", action: "comments#remove" } %>
-                <%= button_tag "Upvote Comment", data: { controller: "comments", action: "comments#upvote" } %>
-        </li>
-    </ul>
-<% end %>

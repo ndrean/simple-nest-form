@@ -8,6 +8,8 @@ Simple one-to-may association _post / comment_ where the comments resources are 
 
 - [Other examples of custom routes/methods](#other-examples-of-custom-routes/methods)
 
+- [ Reminder installation Bootstrap & Simple Form ](#bootstrap-simple-form-setup)
+
 ## Routes:
 
 ```ruby
@@ -128,4 +130,31 @@ and in the show _views/posts/:post_id_ calling the partial _views/comments/\_com
 
 ```ruby
 <%= link_to 'Destroy', [@post, comment], url: "destroy/#{comment.id}", method: :delete, remote: true, data: { confirm: 'Are you sure to Erase?' } %>
+```
+
+## Bootstrap Simple Form setup
+
+```bash
+yarn add bootstrap
+```
+
+- Modifiy _#assp/Assets/Stylesheets/application.css_ to _.scss_ and add: `@import "bootstrap/scss/bootstrap";`
+
+- in _/layout/application.html.erb_ do
+
+```html
+<head>
+  ...
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+```
+
+```ruby
+gem 'simple_form'
+```
+
+```bash
+bundle
+rails g simple_form:install --bootstrap
 ```

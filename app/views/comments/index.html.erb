@@ -2,23 +2,21 @@
 <p>#views/comments/index.html.erb</p>
 <h1>Comments for Post # <%= @post.id %></h1>
 
-<table>
+<table class="table table-dark">
   <thead>
     <tr>
-      <th>Body</th>
-      <th>Post</th>
-      <th colspan="3"></th>
+      <th scope="col">Body</th>
+      <th scope="col" colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @comments.each do |comment| %>
       <tr data-comment-id="<%= comment.id %>">
-        <td><%= comment.body %></td>
-        <td><%= comment.post_id %></td>
+        <td scope="row"><%= comment.body %></td>
         <td><%= link_to 'Show Post', @post %></td>
-        <td><%= link_to 'Edit', edit_post_comment_path(@post, comment) %></td>
-        <td><%= link_to 'Erase', [@post, comment], url: "erase/#{comment.id}", method: :delete, remote: true, data: { confirm: 'Are you sure to Erase?' } %></td>
+        <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
+        <td><%= link_to 'Erase', erase_path(comment), method: :delete, remote: true, data: { confirm: 'Are you sure to Erase?' } %></td>
       </tr>
     <% end %>
   </tbody>

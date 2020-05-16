@@ -2,11 +2,16 @@
 
 <%# post_comments_save_path(@post) <=> url: {controller:"comments", action: "save"} %>
 
-<%= form_with model: [@post, @comment], url: post_comments_path(@post), local: true  do |form| %>
+<%#= form_with model: [@post, @comment], url: post_comments_save_path(@post), local: true  do |form| %>
+<%= simple_form_for([@post,@comment], url: {controller: 'comments', action: "save"}) do |f| %>
 
-    <%= render 'comments/form', form: form %>
-  
+<%#= simple_form_for [@post,@comment], url: {controller: 'comments', action: "save"} do |f| %>
+  <%= f.input :body %>
+  <%= f.button :submit, class:"btn btn-primary" %>
 <% end %>
+    
+<%# url: {controller: 'comments', action: "save"} %>
+<%# post_comments_save_path(@post,@comment) %>
 <pre>
 # comments#new
 def new
