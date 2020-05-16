@@ -4,9 +4,8 @@ Rails.application.routes.draw do
 
   resources :posts do
     post 'comments/save'
-    delete 'comments/:id', to: 'comments#erase'
+    #delete 'comments/:id', to: 'comments#erase'
     resources :comments do
-      
     end
   end
   

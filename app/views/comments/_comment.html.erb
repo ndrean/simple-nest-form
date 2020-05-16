@@ -3,7 +3,9 @@
         <h6 >Body: <%= comment.body %></h6>
         <%#= link_to 'Show Comments', post_comments_path(post) %>
         <%#= link_to 'Edit', edit_post_path(post) %>
-        <%= link_to 'Destroy', [@post, comment], method: :delete, remote: true, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Destroy', [@post, comment], url: "destroy/#{comment.id}", method: :delete, remote: true, data: { confirm: 'Are you sure to Destroy?' } %>
         <hr>
     </article>
 </div>
+
+<%# post_comment_path(@post, comment) %>
