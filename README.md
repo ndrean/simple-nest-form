@@ -1,9 +1,12 @@
 # README
 
-Simple one-to-may association _post / comment_ where the comments resources are namespaced by posts.
+Simple one-to-may association _post / comment_ where the comments resources are namespaced by posts: `posts/:post_id/comments/:id`.
 
-- Nested forms with namespace
-- custom methods/routes
+[Rendering a collection of comments](#rendering-a-collectino-of-comments)
+[Redner a nested form](#render-a-nested-form) with `@post, @comment`
+[Other examples of custom routes/methods](#other-examples-of-custom-routes/methods)
+
+## Routes:
 
 ```ruby
 #routes
@@ -17,9 +20,17 @@ resources :posts do
 end
 ```
 
-- render a nested form: we gave two examples
+## Render a collection of comments
 
-On the view 'show' for _/posts/1_, we have a form to create a nested _comment_ (=> comments#create) with rendering `<%= render 'comments/_form %>` where `<%= form_with model: [@post, @comment] do |form| %>` (`f.object` is a _comment_). The _posts#show_ furnishes a new comment object:
+Example in the view _/views/posts_ that renders the method _posts#index_. We can iterate with a table and use `<% @posts.each do |post| %> <%= post.title %> ...`. We can also use `<%= render @posts %>` to render the list of post defined in a partial _views/posts/\_post.html.erb_ (as an _article_).
+
+Aother example with `<%= render @post.comments %>` to render all comments for a given post, with the partial _/views/comments/\_comment.html.erb_.
+
+## Render a nested form
+
+Two examples.
+
+1. On the view 'show' for _/posts/1_, we have a form to create a nested _comment_ (=> comments#create). The form is rendered with the partial `<%= render 'comments/_form %>`. We use the formbuilder `form_with` and define `<%= form_with model: [@post, @comment] do |form| %>` (where the form object `f.object` is a _comment_). The _posts#show_ furnishes a new comment object:
 
 ```ruby
 def show
@@ -28,13 +39,14 @@ def show
 end
 ```
 
-and on submit, the form calls by default the method _comments#create_ (the url would have been `post_comments_path(@post) <=> url: {controller: 'comments, action: "create"}` but it is automatically called by Rails):
+and on submit, the form calls by default the method _comments#create_ (the url would have been `post_comments_path(@post) <=> url: {controller: 'comments, action: "create"}`. It automatically calls the method _comments#create_ from the other controller:
 
 ```ruby
+#comments_controller.rb
 def create
     @post = Post.find(params[:post_id]) # <=> before_action :set_post
     @comment = @post.comments.build(comment_params)
-
+    # we decided to inject the new comment by JAvascript in the 'posts/:post_id#show' view => respond_to js
     respond_to do |format|
       if @comment.save
         format.js
@@ -46,7 +58,7 @@ def create
   end
 ```
 
-From the index view _/posts/1/comments_, we have defined a custom method 'save' method (the standard _comments#create_ works with `respond_to js` since the formbuilder `form_with` has the attribute `remote: true` by default; here, we don't need JAXA rendering as we have a redirection in the view, so we defined a custom non-Ajax method) by defining the route
+2. In the index view _/posts/1/comments/new_, we have defined a custom method 'save' method (the standard _comments#create_ works with `respond_to js` since the formbuilder `form_with` has the attribute `remote: true` by default; here, we don't need AJAX rendering as we have a redirection in the view, so we could have used the html rendering and declare `local: true`). For this, we define a new route:
 
 ```ruby
 resources: posts do
@@ -74,23 +86,27 @@ The command _rails routes_ shows that:
 
 > url: post_comments_save_path(@post) <=> url: {controller:"comments", action: "save"}
 
-We also defined two destroy methods in the controller _comments_ as the rendering was different. Both are Ajax.
+## Other examples of custom routes/methods
 
-We normally call a _destroy_ method, defined automatically in the _resouces_ routes with a link:
+We also defined two destroy methods in the controller _comments_ . Both are Ajax but the rendering is different. Note that we could have written a `<% if condition %> { do something} <% else %> { do something else}` in a _destroy.js.erb_ file.
+
+A _destroy_ method defined in the resources list is called - for a _post_ object by a link (made Ajax here with `remote: true`)
 
 ```ruby
     <%= link_to 'Destroy', post, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %>
 
 ```
 
-or `post_comment_path(comment.post, comment), method: :delete,`, if we use the nested object. Since we have two _delete_ in the controller _comments_, we need to specify the route:
+For a _destroy_ link for the nested _comments_ controller, the link would have been `post_comment_path(comment.post, comment), method: :delete,`.
+
+Here, we have two _delete_ in the controller _comments_ so we need to specify the route:
 
 ```ruby
 resources :posts do
     delete 'comments/:id', to: 'comments#erase'
 ```
 
-and the call in the view _posts/:post_id/comments_ by the limnk:
+and the call in the view _posts/:post_id/comments_ by the link:
 
 ```ruby
 <%= link_to 'Erase', [@post, comment], url: "erase/#{comment.id}", method: :delete, remote: true,
@@ -101,8 +117,3 @@ and in the show _views/posts/:post_id_ calling the partial _views/comments/\_com
 ```ruby
 <%= link_to 'Destroy', [@post, comment], url: "destroy/#{comment.id}", method: :delete, remote: true, data: { confirm: 'Are you sure to Erase?' } %>
 ```
-
-- To render an collection of comments:
-  we can use: `<%= render @posts %>` (from the _posts#index_ view) to render the list of post where we defined a partial _views/posts/\_post.html.erb_ (as an _article_, where we have the _posts#destroy_ method
-
-  or `<%= render @post.comments %>` to render all comments for a given post, and defined a partial _/views/comemnts/\_comment.html.erb_ (where we have the _comments#erase_ method).
