@@ -51,12 +51,14 @@ class CommentsController < ApplicationController
     end
   end
 
+  # custom route namespaced by posts to 'comments#save'
   def save
-    @comment = @post.comments.create(comment_params)
     respond_to do |format|
-      format.js
+      @comment = @post.comments.create(comment_params)
+      format.html { redirect_to post_comments_path(@post), notice: 'Comment was successfully created' }
     end
   end
+
   # PATCH/PUT /comments/1
   def update
     @post = Post.find(params[:post_id]) # <=> before_action :set_post
@@ -82,6 +84,15 @@ class CommentsController < ApplicationController
       format.js
       format.html { redirect_to post_path(@post), notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def erase
+    @post = Post.find(params[:post_id]) # <=> before_action :set_post
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    respond_to do |format|
+      format.js
     end
   end
 

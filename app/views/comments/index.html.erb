@@ -13,12 +13,12 @@
 
   <tbody>
     <% @comments.each do |comment| %>
-      <tr>
+      <tr data-comment-id="<%= comment.id %>">
         <td><%= comment.body %></td>
         <td><%= comment.post_id %></td>
-        <td><%#= link_to 'Show Post', @post %></td>
+        <td><%= link_to 'Show Post', @post %></td>
         <td><%= link_to 'Edit', edit_post_comment_path(@post, comment) %></td>
-        <td><%= link_to 'Destroy', [@post, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Erase', [@post, comment], url: "erase/#{comment.id}", method: :delete, remote: true, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,5 +28,5 @@
 
 <%= link_to 'Back to all Posts', posts_path, class:"badge badge-info", style:"color:white;font-size:16px;" %> |
 
-<%= link_to 'New Comment', new_post_comment_path, class:"badge badge-info", style:"color:white;font-size:16px;" %> 
+<%= link_to 'New Comment (with custom"save")', new_post_comment_path, class:"badge badge-info", style:"color:white;font-size:16px;" %> 
 

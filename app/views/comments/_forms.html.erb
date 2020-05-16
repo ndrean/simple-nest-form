@@ -1,8 +1,7 @@
-<%#= form_with(model: comment, local: true) do |form| %>
-<div data-controller="comments">
+<div >
 
-  <%= form_with model: [@post, @comment], data: { action: "comments#addBody"} do |form| %>
-
+  <%= form_with model: [@post, @comment] do |form| %>
+    <%= form.object %>
     <div class="field">
       <%= form.label :body %>
       <%= form.text_area :body, data: { target: "comments.body" } %>
@@ -17,5 +16,5 @@
       <%= form.submit %>
     </div>
   <% end %>
-  <ul data-target="comments.add"></ul>
+
 </div>

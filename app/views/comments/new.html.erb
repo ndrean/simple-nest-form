@@ -1,8 +1,8 @@
-<h1>New Comment for Post # <%= @post.id %></h1>
+<h1>New Comment for Post # <%= @post.id %> (with custom "save")</h1>
 
+<%# post_comments_save_path(@post) <=> url: {controller:"comments", action: "save"} %>
 
-<%#= form_with(model: comment, local: true) do |form| %>
-<%= form_with(model: [@post, @comment], local: true) do |form| %>
+<%= form_with model: [@post, @comment], url: post_comments_save_path(@post), local: true  do |form| %>
 
     <%= render 'comments/form', form: form %>
   

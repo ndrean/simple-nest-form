@@ -21,12 +21,9 @@
           <td><%= post.title %></td>
           <td><%= post.body %></td>
           <td><%= link_to 'Show & add comment', post_path(post) %></td>
-          <td><%#= link_to 'Show Comments', post_comments_path(post) %></td>
-          <td><%#= link_to 'Edit', edit_post_path(post) %></td>
-          <td><%#= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= button_to 'Show', post_path(:id =>   post.id), method: :get %> </td>
-          <td><%= button_to 'Edit', edit_post_path(:id =>  post.id), method: :get %></td>
-          <td><%= button_to 'Destroy', post_path(:id => post.id), method: :delete %></td>
+          <td><%= link_to 'Show List of Comments', post_comments_path(post) %></td>
+          <td><%= link_to 'Edit', edit_post_path(post) %></td>
+          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -37,6 +34,7 @@
 </div>
 <div class="row">
 <p>https://morioh.com/p/5999950bcfb1</p>
+
 </div>
 
 <br>
