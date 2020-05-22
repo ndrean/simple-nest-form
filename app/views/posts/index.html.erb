@@ -32,16 +32,15 @@
 <div class="row">
    <%= link_to 'New Post', new_post_path, class:"badge badge-info mybadge" %>
 </div>
-<div class="row">
-<p>https://morioh.com/p/5999950bcfb1</p>
 
-</div>
 
 <br>
 
 
 <div class="row">
-  <h5>2) Other possibility: rendering with <code>&lt%= render @posts %></code> with the partial <em>#views/posts/_post.html.erb</em></h5>
+  <h5>2) Other possibility: rendering with <code>&lt%= render @posts %></code> 
+  with the partial <em>#views/posts/_post.html.erb</em>. We used <code>style='display:inline-block'</code> 
+  to have a flex-like display.</h5>
 
 </div>
 <%= render @posts %>

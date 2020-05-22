@@ -14,13 +14,22 @@ Simple one-to-may association _post / comment_ where the comments resources are 
 
 ```ruby
 #routes
-root to: 'posts#index'
+Rails.application.routes.draw do
 
-resources :posts do
+  root to: 'posts#index'
+
+  resources :posts do
+    post 'save/:id', to: 'comments#save', as: 'save'
+
     post 'comments/save'
-    delete 'comments/:id', to: 'comments#erase'
-    resources :comments do
-    end
+    #delete 'comments/:id', to: 'comments#erase'
+    resources :comments, only: [:index, :new, :create]
+  end
+
+  resources :comments, only: [:destroy, :show, :edit, :update]
+
+  delete 'erase/:id', to: "comments#erase", as: 'erase'
+
 end
 ```
 
