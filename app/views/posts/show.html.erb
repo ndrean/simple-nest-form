@@ -20,16 +20,16 @@
         <div class="card-body">
 
         <pre>
-          #posts_controler.rb
-          def show
-            @post = Post.find(params[:id])
-            @comment = Comment.new(post: @post)
-          end
+#posts_controler.rb
+def show
+  @post = Post.find(params[:id])
+  @comment = Comment.new(post: @post)
+end
 
-          #views/posts/:post_id
-          &lt%= form_with(model: [@post, @comment],  url: {controller:"comments", action: "save"} local: true) do |form| %>
-            &lt%= render 'comments/form', form: form %>
-          &lt% end %>
+#views/posts/:post_id
+&lt%= form_with(model: [@post, @comment],  url: {controller:"comments", action: "save"} local: true) do |form| %>
+  &lt%= render 'comments/form', form: form %>
+&lt% end %>
           </pre>
           
         </div>
@@ -44,11 +44,11 @@
         </div>
 
         <pre>
-        &ltform action="/posts/1/comments" accept-charset="UTF-8" data-remote="true" method="post">
-        &lttextarea name="comment[body]" id="comment_body">&lt/textarea>
-        &ltinput type="text" value="1" name="comment[post_id]"> 
-        &ltinput type="submit" name="commit" value="Create Comment" data-disable-with="Create Comment">
-        &lt/form>
+&ltform action="/posts/1/comments" accept-charset="UTF-8" data-remote="true" method="post">
+&lttextarea name="comment[body]" id="comment_body">&lt/textarea>
+&ltinput type="text" value="1" name="comment[post_id]"> 
+&ltinput type="submit" name="commit" value="Create Comment" data-disable-with="Create Comment">
+&lt/form>
         </pre>
 
       </div>
