@@ -38,10 +38,8 @@ that the method `index` can react differently: an empty array `[]` on page load,
 important to use `locals: {posts: @posts}` for this to work (usually we don't need `locals`).
 The JS `fetch()` asks for 'text/html' and parses the response from 'index' into 'text' with <code>response.text()</code>.
 Then we just pass this content in the (unsual) form 'text/html' (parsed by Ruby, see in the console/network call) to render in
-the view.</p>
-<p>Note: we need Turbolinks to be loaded to use the JS methods (see 'application.js')</p>
+the view. Note: we need Turbolinks to be loaded to use the JS methods (see 'application.js')</p>
 
-</pre>
   <div class="col-md-6">
   <pre>
 # post_controller.rb
@@ -65,19 +63,22 @@ end
 const fetchPosts = (tag) => {
   document.querySelector(tag).addEventListener("click", (e) => {
     e.preventDefault();
-    fetch('/posts?f=""', {
-      method: "GET",
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "Content-Type": "text/html",
-        Accept: "text/html",
-      },
-      credentials: "same-origin",
-    })
-      .then((response) => response.text())
-      .then(
-        (content) => (document.querySelector("#posts_list").innerHTML = content)
-      );
+    try {
+      const query = await fetch('/posts?f=""', {
+        method: "GET",
+        headers: {
+          "Content-Type": "text/html",
+          Accept: "text/html",
+        },
+        credentials: "same-origin", // default value
+      });
+      if (query.ok) {
+        const content = await query.text();
+        return (document.querySelector("#posts_list").innerHTML = content);
+      }
+    } catch (error) {
+      throw error;
+    }
   });
 };
 

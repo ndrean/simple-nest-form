@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :new, :create]
   end
 
+  get 'articles', to: 'posts#display_articles'
+
   resources :comments, only: [:destroy, :show, :edit, :update]
 
   delete 'erase/:id', to: "comments#erase", as: 'erase'
@@ -143,19 +145,22 @@ end
 const fetchPosts = (tag) => {
   document.querySelector(tag).addEventListener("click", (e) => {
     e.preventDefault();
-    fetch('/posts?f=""', {
-      method: "GET",
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "Content-Type": "text/html",
-        Accept: "text/html",
-      },
-      credentials: "same-origin",
-    })
-      .then((response) => response.text())
-      .then(
-        (content) => (document.querySelector("#posts_list").innerHTML = content)
-      );
+    try {
+      const query = await fetch('/posts?f=""', {
+        method: "GET",
+        headers: {
+          "Content-Type": "text/html",
+          Accept: "text/html",
+        },
+        credentials: "same-origin", // default value
+      });
+      if (query.ok) {
+        const content = await query.text();
+        return (document.querySelector("#posts_list").innerHTML = content);
+      }
+    } catch (error) {
+      throw error;
+    }
   });
 };
 
