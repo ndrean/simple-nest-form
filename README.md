@@ -6,6 +6,7 @@ Simple one-to-may association _post / comment_ where the comments resources are 
 
 - [ Render a nested form](#render-a-nested-form) with `@post, @comment`
 
+- [Fetch GET for Post.all with 2 Ajax method](#fetch-GET-AJAX)
 - [Other examples of custom routes/methods](#other-examples-of-custom-routes/methods)
 
 - [ Reminder installation Bootstrap & Simple Form ](#bootstrap-simple-form-setup)
@@ -108,6 +109,79 @@ so we have a view _/posts/1/comments/new_ that contains a form with `form_with .
 The command _rails routes_ shows that:
 
 > url: post_comments_save_path(@post) <=> url: {controller:"comments", action: "save"}
+
+## Fetch GET AJAX
+
+We defined a button to display all the posts. On page load, the list is empty
+We defined a JS `fetch() GET` function that triggers on this button click,
+and points to the URL `/posts?f=""`. This URL is served by the method 'posts#index'.
+We put a query string `f=""` such that we can differenciate the presence of params so
+that the method `index` can react differently: an empty array `[]` on page load, and
+`Post.all` when 'index' sees some params. Then we render a partial. Note that it is
+important to use `locals: {posts: @posts}` for this to work (usually we don't need `locals`).
+The JS `fetch()` asks for 'text/html' and parses the response from 'index' into 'text' with `response.text()`.
+Then we just pass this content in the (unsual) form 'text/html' (parsed by Ruby, see in the console/network call) to render in
+the view.</p>
+
+<p>Note: we need Turbolinks to be loaded to use the JS methods (see 'application.js')</p>
+
+```ruby
+# post_controller.rb
+def index
+  if params[:f].present?
+    @posts = Post.all
+    render partial: 'posts/posts', locals: {posts: @posts}, layout: false
+  else
+  #   # on page load, show nothing
+    @posts = []
+  end
+end
+```
+
+```js
+#/packs/components/fetchPosts.js
+const fetchPosts = (tag) => {
+  document.querySelector(tag).addEventListener("click", (e) => {
+    e.preventDefault();
+    fetch('/posts?f=""', {
+      method: "GET",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "text/html",
+        Accept: "text/html",
+      },
+      credentials: "same-origin",
+    })
+      .then((response) => response.text())
+      .then(
+        (content) => (document.querySelector("#posts_list").innerHTML = content)
+      );
+  });
+};
+
+export { fetchPosts };
+```
+
+> We can use `innerHTML` to render this text.
+
+We can compare this to a traditionnal method using a `link_to, remote: true` to another method that renders a `js.erb` file:
+
+```ruby
+#posts#display_articles
+def display_articles
+      @posts = Post.all
+      respond_to :js
+  end
+```
+
+```js
+document.querySelector("#articles_list").innerHTML = "";
+document
+  .querySelector("#articles_list")
+  .insertAdjacentHTML("afterbegin", `<%= j render @posts %>`);
+```
+
+> We need `insertAdjacentHTML` and not `innerHTML` to work.
 
 ## Other examples of custom routes/methods
 
