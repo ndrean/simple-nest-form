@@ -1,0 +1,3 @@
+document.querySelector("#articles_list").innerHTML = ""
+document.querySelector("#articles_list").insertAdjacentHTML('afterbegin',
+`<%= j render @posts %>`)

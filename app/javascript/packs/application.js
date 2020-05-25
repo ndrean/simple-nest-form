@@ -14,3 +14,11 @@ require("channels");
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+import { fetchPosts } from "../components/fetchPosts";
+
+document.addEventListener("turbolinks:load", () => {
+  if (document.querySelector("#index_posts")) {
+    fetchPosts("#index_posts");
+  }
+});

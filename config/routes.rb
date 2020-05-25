@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :new, :create]
   end
 
+  get 'articles', to: 'posts#display_articles'
   resources :comments, only: [:destroy, :show, :edit, :update]
 
   delete 'erase/:id', to: "comments#erase", as: 'erase'

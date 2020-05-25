@@ -14,7 +14,22 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    # the Javascript fetch() points to '/posts?f=""', with params[:f]="" not nil,
+    # and is served by "posts#index":
+    if params[:f].present?
+      #puts params[:f].present? #=> in the logs 
+    # after clic, render this as text since fetch() receives .txt
+      @posts = Post.all
+      render partial: 'posts/posts', locals: {posts: @posts}, layout: false
+    else
+    #   # on page load, show nothing
+      @posts = []
+    end
+  end
+
+  def display_articles
+      @posts = Post.all 
+      respond_to :js
   end
 
   # GET /posts/:id

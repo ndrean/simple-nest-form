@@ -1,0 +1,10 @@
+<% posts.each do |post| %>
+  <tr data-post-id="<%= post.id %>">
+    <td scope="row"><%= post.title %></td>
+    <td><%= post.body %></td>
+    <td><%= link_to 'Show & add comment', post_path(post) %></td>
+    <td><%= link_to 'Show List of Comments', post_comments_path(post) %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
