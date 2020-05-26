@@ -2,6 +2,7 @@
 
 Simple one-to-may association _post / comment_ where the comments resources are namespaced by posts: `posts/:post_id/comments/:id`.
 
+- Import JS in js.erb](#import-js-methods-in-js.erb)
 - [Rendering a collection of comments](#rendering-a-collectino-of-comments)
 
 - [ Render a nested form](#render-a-nested-form) with `@post, @comment`
@@ -10,6 +11,30 @@ Simple one-to-may association _post / comment_ where the comments resources are 
 - [Other examples of custom routes/methods](#other-examples-of-custom-routes/methods)
 
 - [ Reminder installation Bootstrap & Simple Form ](#bootstrap-simple-form-setup)
+
+## Import JS methods in _js.erb_
+
+To add Erb support in your JS templates, run:
+
+```bash
+bundle exec rails webpacker:install:erb
+```
+
+on a Rails app already setup with Webpacker.
+
+With this setting, we then can create a _.js.erb_ file in the folder _/javascript/packs/_. Then we can use ERB (Ruby parses the file first) and import external libraries with `import { myFunction } from '../components/myJsFile.js`.
+
+In other words, we can import _.js_ libraries into _.js.erb_ files.
+
+> Note 1: A 'standard' view rendering file _.js.erb_ located in the views does <strong>not</strong> have access to `import`, only those located in the folder _/javascript/packs/_ do (after running `webpacker:install:erb`).
+
+> Note 2: To use a JS library inside a view _.html.erb_ we need to:
+
+- import the library in a _someFile.js.erb_ file in the folder _/javascript/packs/_
+
+- import the _someFile.js.erb_ file in the view with `<t%= javascript_pack_tag 'someFile' %>`
+
+> Note 3: we need to have Turbolinks loaded to access to the DOM, so all the code in the _someFile.js.erb_ file is wrapped as a callback: `document.addEventListener("turbolinks:load", myFunction})`, and declare `const myFunction = ()=> {[...]}` after.
 
 ## Routes:
 

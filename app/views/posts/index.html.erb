@@ -3,13 +3,14 @@
 <div class="row">
   <h1>Index of Posts</h1>
 </div>
+
+
+
 <div class="row"> 
   <h5>1) Rendering with a table and iteration with <code>&lt% @posts.each do |post| %></code></h5>
   <br>
 
 <button class="badge badge-info mybadge", id="index_posts">Show Post all</button>
-
-
 
   <table class="table table-dark">
     <thead>
@@ -101,9 +102,9 @@ export { fetchPosts };
 
 </div>
 <%= link_to 'Show All Articles', articles_path, remote: true, id:"article_btn", class:"badge badge-info mybadge" %>
-<p>Wwe present another Ajax method to render. The link `remote: true`above points to the `posts#display_articles` method where
-we just defined the `respond_to` to `format :js`,  which renders the view '/posts/display_articles.js.erb'.
-Note: we need `insertAdjacentHTML` and not just `innerHTML` for this to work.</p>
+<p>We have another Ajax method to render. The link <code>remote: true</code> above points to the `posts#display_articles` method where
+we just defined the <code>respond_to</code> to <em>format.js</em>,  which renders the view '/posts/display_articles.js.erb'.
+Note: we need <code>insertAdjacentHTML</code> and not just <em>innerHTML</em> for this to work.</p>
 <pre>
 document.querySelector("#articles_list").innerHTML = ""
 document.querySelector("#articles_list").insertAdjacentHTML('afterbegin',
@@ -111,6 +112,31 @@ document.querySelector("#articles_list").insertAdjacentHTML('afterbegin',
 </pre>
 <div id="articles_list">
   <%= render @posts %>
+  <!--  above is shorthand for %= render partial 'psots/post', collection: @posts %-->
 </div>
+<div class="row">
+<h5>3) Importing <em>.js</em> libraries into <em>.js.erb</em> files</h5>
+<p>To add Erb support in your JS templates, run <code>bundle exec rails webpacker:install:erb</code> 
+on a Rails app already setup with Webpacker. We then can create a <em>.js.erb</em> file in the
+folder <em>/javascript/packs</em>. Then we can use <em>ERB</em> (Ruby parses it first) and
+external libraries with <code>import { myFunction } from '../components/myJsFile.js</code>. 
+</p>
+<p> Note 1: A 'standard' view rendering file <em>.js.erb</em> located in the views does <strong>not</strong>
+have access to <em>import</em>, only those located in the folder <em>/javascript/packs/</em> do
+ (after running <em>webpacker:install:erb)</em></p>
+<p>Note 2: To use a <em>JS</em> library inside a view <em>.html.erb</em>, we need to:</p>
+<ul>
+  <li>import the library in a <em>someFile.js.erb</em> file in <em>/javascript/packs</em></li>
+  <li>import the <em>someFile.js.erb</em> file in the view with <code>&lt%= javascript_pack_tag 'someFile' %></code></li>
+</ul>  
+
+<p>Note 3: we need to have Turbolinks loaded to access to the DOM, so all the code in the 
+<em>someFile.js.erb</em> file is a callback: <code>document.addEventListener("turbolinks:load", myFunction})</code> 
+and declare <code>const myFunction = ()=> {[...]}</code> after.
+</p>
+</div>
+<div id="test" data-id="<%= Post.first.id %>">Appended by  <em>hello_erb.js.erb</em> using an external library:</div>
+<%= javascript_pack_tag 'hello_erb' %>
+
 
 

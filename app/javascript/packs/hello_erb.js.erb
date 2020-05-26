@@ -1,6 +1,21 @@
 // Run this example by adding <%%= javascript_pack_tag 'hello_erb' %> to the head of your layout file,
 // like app/views/layouts/application.html.erb. Don't forget to uncomment erb tag after adding it to your layout file.
 
-<% name = 'Erb' %>
+import { add } from '../components/addition'
 
-console.log('Hello world from <%= name %>')
+<% body = Post.first.comments[0].body %>
+console.log('The body of this post is :','<%= body %>')
+
+
+// If I use ()=> {}, I need to declare it before the call
+// If I use function(){}, then I can put the code anywhere
+const myFunction = () => {
+  const p = document.createElement('p')
+  const tdiv = document.querySelector('#test')
+  // const val = document.querySelector('[data-id]')
+  p.innerHTML = ` You are reading the body of the first comment on post <%= Post.first.id %> (title: <%= Post.first.title %>):  '<%= body %>', and using an external JS function: add(2,3) : ${add(2,3)}`
+  return tdiv.appendChild(p)
+};
+
+document.addEventListener("turbolinks:load", myFunction)
+
