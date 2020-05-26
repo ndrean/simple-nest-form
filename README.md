@@ -26,6 +26,8 @@ With this setting, we then can create a _.js.erb_ file in the folder _/javascrip
 
 In other words, we can import _.js_ libraries into _.js.erb_ files.
 
+> This can save on _data-attributes_ (the `data-something="<%= Post.first.id%>"` in the HTML file with it's searching `document.querySelector('[data-something]')`can be replaced simply by eg `const id = <%= Post.first.id%> in the _.js.erb_ file)
+
 > Note 1: A 'standard' view rendering file _.js.erb_ located in the views does <strong>not</strong> have access to `import`, only those located in the folder _/javascript/packs/_ do (after running `webpacker:install:erb`).
 
 > Note 2: To use a JS library inside a view _.html.erb_ we need to:

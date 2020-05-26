@@ -4,7 +4,8 @@
 import { add } from '../components/addition'
 
 <% body = Post.first.comments[0].body %>
-console.log('The body of this post is :','<%= body %>')
+const mybody = <%= Post.first.id %>
+console.log('The body of this post is :','<%= body %>', mybody)
 
 
 // If I use ()=> {}, I need to declare it before the call

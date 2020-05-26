@@ -134,6 +134,12 @@ have access to <em>import</em>, only those located in the folder <em>/javascript
 <em>someFile.js.erb</em> file is a callback: <code>document.addEventListener("turbolinks:load", myFunction})</code> 
 and declare <code>const myFunction = ()=> {[...]}</code> after.
 </p>
+
+<p>
+Note 4: This can save on _data-attributes_ (the <code>`data-something="&lt%= Post.first.id%>"`</code> in the HTML file
+ with it's searching <code>`document.querySelector('[data-something]')` </code>can be replaced simply by eg
+  <code>`const id = &lt%= Post.first.id%> </code> in the _.js.erb_ file)
+</p>
 </div>
 <div id="test" data-id="<%= Post.first.id %>">Appended by  <em>hello_erb.js.erb</em> using an external library:</div>
 <%= javascript_pack_tag 'hello_erb' %>
