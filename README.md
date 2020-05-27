@@ -2,8 +2,8 @@
 
 Simple one-to-may association _post / comment_ where the comments resources are namespaced by posts: `posts/:post_id/comments/:id`.
 
-- Import JS in js.erb](#import-js-methods-in-js.erb)
-- [Rendering a collection of comments](#rendering-a-collectino-of-comments)
+- [Import JS in js.erb](#import-js-methods-in-js.erb)
+- [Rendering a collection of comments](#rendering-a-collection-of-comments)
 
 - [ Render a nested form](#render-a-nested-form) with `@post, @comment`
 
@@ -65,7 +65,7 @@ end
 
 ## Render a collection of comments
 
-Example in the view _/views/posts_ that renders the method _posts#index_. We can iterate with a table and use `<% @posts.each do |post| %> <%= post.title %> ...`. We can also use `<%= render @posts %>` to render the list of post defined in a partial _views/posts/\_post.html.erb_ (as an _article_).
+Example in the view _/views/posts_ that renders the method _posts#index_. We can iterate with a table and use `<% @posts.each do |post| %> <%= post.title %> ...`. We can also use `<%= render @posts %>` or `<%= render partial: '/posts/post', collection: @posts %>` to render the list of post defined in a partial _views/posts/\_post.html.erb_ (as an _article_).
 
 Another example with `<%= render @post.comments %>` to render all comments for a given post, with the partial _/views/comments/\_comment.html.erb_.
 
@@ -144,7 +144,7 @@ The command _rails routes_ shows that:
 We defined a button to display all the posts. On page load, the list is empty
 We defined a JS `fetch() GET` function that triggers on this button click,
 and points to the URL `/posts?f=""`. This URL is served by the method 'posts#index'.
-We put a query string `f=""` such that we can differenciate the presence of params so
+We put a dummy query string `f=""` such that we can differenciate the presence of params so
 that the method `index` can react differently: an empty array `[]` on page load, and
 `Post.all` when 'index' sees some params. Then we render a partial. Note that it is
 important to use `locals: {posts: @posts}` for this to work (usually we don't need `locals`).

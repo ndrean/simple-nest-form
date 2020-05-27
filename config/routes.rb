@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
 
     post 'comments/save'
-    #delete 'comments/:id', to: 'comments#erase'
+    
     resources :comments, only: [:index, :new, :create]
   end
 

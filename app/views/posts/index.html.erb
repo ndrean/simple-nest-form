@@ -112,8 +112,9 @@ document.querySelector("#articles_list").insertAdjacentHTML('afterbegin',
 `<%= j render @posts %>`)
 </pre>
 <div id="articles_list">
+<!-- RENDERING A COLLECTION -->
   <%= render @posts %>
-  <!--  above is shorthand for %= render partial 'psots/post', collection: @posts %-->
+  <!--  above is shorthand for %= render partial: 'posts/post', collection: @posts %-->
 </div>
 <div class="row">
 <h5>3) Importing <em>.js</em> libraries into <em>.js.erb</em> files</h5>
