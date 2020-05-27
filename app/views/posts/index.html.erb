@@ -32,8 +32,9 @@
 <div class="row">
  <p>We defined a button to display all the posts. On page load, the list is empty
 We defined a JS <code>fetch() GET</code> function that triggers on this button click, 
-and points to the URL  `/posts?f=""`. This URL is served by the method 'posts#index'.
-We put a query string `f=""` such that we can differenciate the presence of params so
+which sends a dummy query string that points to the URL  `/posts`, sending `?f=""`.
+This URL is served by the method 'posts#index'.
+We put a dummy query string `f=""` such that we can differenciate the presence of params so
 that the method `index` can react differently: an empty array `[]` on page load, and
 `Post.all` when 'index' sees some params. Then we render a partial. Note that it is
 important to use `locals: {posts: @posts}` for this to work (usually we don't need `locals`).
